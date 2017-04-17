@@ -1,2 +1,3 @@
-# CHIP8-Emulator
-A simple CHIP8 emulator created to learn more about emulation
+# CHIP8-Emulator - IN DEVELOPMENT
+A simple CHIP8 emulator created to learn more about emulation<br>
+
