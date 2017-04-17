@@ -302,19 +302,20 @@ namespace CPU {
         const static SDL_Rect SCREEN = {W * PIXEL_SIZE, H * PIXEL_SIZE, 0, 0};
         SDL_RenderFillRect(ren, &SCREEN);
 
-        SDL_SetRenderDrawColor(ren, 1, 1, 1, 1);
+        SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
         SDL_Rect dst;
         dst.w = PIXEL_SIZE;
         dst.h = PIXEL_SIZE;
 
         int i = 0;
-        for (auto iter = std::begin(display_mem); iter != std::end(display_mem); ++iter, ++i) {
-            if (*iter) {
+        for (; i < (W * H / 8); ++i) {
+            if (display_mem[i]) {
                 dst.x = i / CPU::W;
                 dst.y = i % CPU::W;
                 SDL_RenderFillRect(ren, &dst);
             }
         }
+        SDL_RenderPresent(ren);
     }
 }
 
