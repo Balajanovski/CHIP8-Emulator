@@ -1,36 +1,31 @@
+#include "Constants.h"
+#include "Drawer.h"
 #include "Chip8.h"
-#include "KeyLogger.h"
+#include "Controller.h"
 
-#include <string>
-#include <iostream>
+int main(int argc, char **argv) {
+    Drawer drawer(Constants::W * Constants::PIXEL_SIZE, Constants::H * Constants::PIXEL_SIZE, "CHIP8-Emulator");
+    Chip8 cpu(&drawer);
+    Controller control(&cpu);
+    cpu.load_program("PONG");
 
-constexpr static int HERTZ = 60;
+    int delay,
+        last_ticks = 0;
+    while (cpu.get_state() != Constants::QUIT) {
+        control.fetch_keyboard_events();
 
-int main() {
-    std::cout << "Please enter the CHIP8 ROM file src below:" << std::endl;
+        if (cpu.get_state() != Constants::WAITING) {
+            int current_ticks = SDL_GetTicks();
+            cpu.emulate_cycle();
 
-    std::string bin_file;
-    while (!(std::cin >> bin_file))
-        ;
+            delay = 1000 / Constants::HERTZ - current_ticks + last_ticks;
+            if (delay > 0)
+                SDL_Delay(delay);
 
-    CPU::Chip8 cpu;
-    KeyLogger controls;
-    cpu.load_program(bin_file.c_str());
-    controls.add_observer(&cpu);
-
-    int current_time,
-        last_time;
-    last_time = 0;
-    while (cpu.get_state() != CPU::QUIT) {
-        current_time = SDL_GetTicks();
-        if ((current_time - last_time) > HERTZ) {
-            controls.poll_events();
-            cpu.execute_instruction();
-            cpu.display();
-            last_time = current_time;
+            cpu.draw();
+            last_ticks = current_ticks;
         }
     }
 
-    std::cout << "Shutting down" << std::endl;
-
+    return 0;
 }
