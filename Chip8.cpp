@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <random>
 #include <sstream>
-#include <bitset>
 
 const uint8_t Chip8::font_set[80]  =
         {

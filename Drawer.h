@@ -7,8 +7,6 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <cstdint>
-#include <iostream>
-#include <bitset>
 
 using namespace Constants;
 
@@ -44,7 +42,7 @@ public:
                 set_of_pixels = vga[y * (W / BITS_IN_BYTE) + (x)];
                 for (int i = 0; i < BITS_IN_BYTE; ++i) {
 
-                    if ((set_of_pixels >> (i)) & 1) {
+                    if ((set_of_pixels >> i) & 1) {
                         dst.x = ((x * BITS_IN_BYTE) + i) * PIXEL_SIZE;
                         dst.y = y * PIXEL_SIZE;
                         SDL_RenderFillRect(ren, &dst);
