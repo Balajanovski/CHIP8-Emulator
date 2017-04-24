@@ -22,6 +22,8 @@ public:
     Drawer(int, int, const std::string &);
 
     virtual void on_notify(uint8_t * const &vga) {
+        SDL_RenderClear(ren);
+
         SDL_Rect dst;
         dst.x = 0;
         dst.y = 0;
@@ -30,7 +32,7 @@ public:
         SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
         SDL_RenderFillRect(ren, &dst);
         
-        std::bitset<BITS_IN_BYTE> set_of_pixels;
+        uint8_t set_of_pixels;
         dst.w = PIXEL_SIZE;
         dst.h = PIXEL_SIZE;
 
@@ -39,10 +41,10 @@ public:
 
         for (int y = 0; y < H; ++y) {
             for (int x = 0; x < (W / 8); ++x) {
-                set_of_pixels = std::bitset<BITS_IN_BYTE>((vga[(y * (W / BITS_IN_BYTE)) + x]));
+                set_of_pixels = vga[y * (W / BITS_IN_BYTE) + (x)];
                 for (int i = 0; i < BITS_IN_BYTE; ++i) {
 
-                    if (set_of_pixels[i]) {
+                    if ((set_of_pixels >> (i)) & 1) {
                         dst.x = ((x * BITS_IN_BYTE) + i) * PIXEL_SIZE;
                         dst.y = y * PIXEL_SIZE;
                         SDL_RenderFillRect(ren, &dst);
@@ -50,6 +52,7 @@ public:
                 }
             }
         }
+
         SDL_RenderPresent(ren);
 
     }

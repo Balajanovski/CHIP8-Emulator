@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     Drawer drawer(Constants::W * Constants::PIXEL_SIZE, Constants::H * Constants::PIXEL_SIZE, "CHIP8-Emulator");
     Chip8 cpu(&drawer);
     Controller control(&cpu);
-    cpu.load_program("PONG");
+    cpu.load_program("SPACE");
 
     int delay,
         last_ticks = 0;

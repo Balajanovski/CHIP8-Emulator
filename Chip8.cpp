@@ -61,8 +61,8 @@ void Chip8::clear_() {
     std::fill_n(&mem_[0], 0x1000, 0);
 
     // Load the font set
-    for (int i = 0x50; (i - 0x50) < 80; ++i)
-        mem_[i] = font_set[i - 0x50];
+    for (int i = 0; i < 80; ++i)
+        mem_[i] = font_set[i];
 }
 
 void Chip8::draw() {
@@ -322,17 +322,13 @@ void Chip8::exec_inst_() {
             V_[0xF] = 0;
             for (int y_iter = 0; y_iter < n; ++y_iter) {
                 uint8_t sprite_row = mem_[I_ + y_iter];
-                int bit_iter = V_[x] % BITS_IN_BYTE;
-                int x_iter = 0;
-                for (int i = 0; i < BITS_IN_BYTE; ++bit_iter, ++i) {
-                    if (bit_iter >= BITS_IN_BYTE) {
-                        bit_iter %= BITS_IN_BYTE;
-                        ++x_iter;
-                    }
-                    if ((sprite_row >> (7 - i)) & 1) {
-                        if ((vga_mem_[(y_iter + V_[y]) * (W / BITS_IN_BYTE) + ((V_[x] + x_iter) / BITS_IN_BYTE)] >> bit_iter) & 1)
+                for (int i = 0; i < BITS_IN_BYTE; ++i) {
+                    int x_iter = (i + V_[x]);
+                    int bit_iter = x_iter % 8;
+                    if (sprite_row & (0x80 >> i)) {
+                        if ((vga_mem_[(y_iter + V_[y]) * (W / BITS_IN_BYTE) + ((x_iter) / BITS_IN_BYTE)] >> (7 - bit_iter)) & 1)
                             V_[0xF] = 1;
-                        vga_mem_[(y_iter + V_[y]) * (W / BITS_IN_BYTE) + ((V_[x] + x_iter) / BITS_IN_BYTE)] ^= (1 << bit_iter);
+                        vga_mem_[(y_iter + V_[y]) * (W / BITS_IN_BYTE) + ((x_iter) / BITS_IN_BYTE)] ^= (1 << bit_iter);
                     }
                 }
             }
@@ -415,7 +411,7 @@ void Chip8::exec_inst_() {
                 case 0x0029:
                 {
                     x = (opcode_ & 0x0F00) >> 8;
-                    I_ = V_[x] * 0x5;
+                    I_ = V_[x] * 5;
 
                     PC_ += 2;
                 }

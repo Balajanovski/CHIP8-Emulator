@@ -85,7 +85,7 @@ public:
             waiting_reg_ = nullptr;
             state_ = RUNNING;
         }
-        std::cout << std::hex << key << std::endl;
+
         key_[key] = !key_[key];
     }
 };
