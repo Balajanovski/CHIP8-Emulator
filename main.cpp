@@ -6,7 +6,7 @@
 #include <iostream>
 
 int main(int argc, char **argv) {
-    // Check if the user input a rom file
+    // Check if the user input a file
     if (argc <= 1) {
         std::cout << "Please input the directory of the ROM in the arguments" << std::endl;
         return 0;
@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 
     // Initialise the various components
     Drawer drawer(Constants::W * Constants::PIXEL_SIZE, Constants::H * Constants::PIXEL_SIZE, "CHIP8-Emulator");
+
     Chip8 cpu(&drawer);
     Controller control(&cpu);
 
@@ -21,8 +22,7 @@ int main(int argc, char **argv) {
     cpu.load_program(argv[1]);
 
     // Game loop
-    int delay,
-        last_ticks = 0,
+    int last_ticks = 0,
         lag = 0;
     while (cpu.get_state() != Constants::QUIT) {
         int current_ticks = SDL_GetTicks();

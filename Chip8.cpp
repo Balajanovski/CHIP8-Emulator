@@ -5,10 +5,8 @@
 #include "Chip8.h"
 
 #include <fstream>
-#include <cstdint>
-#include <algorithm>
-#include <random>
 #include <sstream>
+#include <iostream>
 
 const uint8_t Chip8::font_set[80]  =
         {
@@ -38,10 +36,13 @@ Chip8::Chip8(Drawer *drawer) : rnd_(std::random_device()()) {
 void Chip8::emulate_cycle() {
     exec_inst_();
 
-    if (delay_timer > 0)
+    if (delay_timer > 0) {
         --delay_timer;
-    if (sound_timer > 0)
+    }
+    if (sound_timer > 0) {
+        AudioManager::instance().beep();
         --sound_timer;
+    }
 }
 
 void Chip8::clear_() {

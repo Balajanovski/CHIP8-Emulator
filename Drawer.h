@@ -20,6 +20,7 @@ public:
     Drawer(int, int, const std::string &);
 
     virtual void on_notify(uint8_t * const &vga) {
+
         SDL_RenderClear(ren);
 
         SDL_Rect dst;

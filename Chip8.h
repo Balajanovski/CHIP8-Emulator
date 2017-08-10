@@ -6,6 +6,7 @@
 #define CHIP8_EMULATOR_CHIP8_H
 
 #include "Drawer.h"
+#include "AudioManager.h"
 #include "Subject.h"
 #include "Observer.h"
 #include "Constants.h"
@@ -62,7 +63,6 @@ private:
 
     // Returns a random integer between 0, 255
     uint8_t get_rnd_num_();
-
 public:
     Chip8(Drawer *);
 

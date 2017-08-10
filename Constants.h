@@ -6,7 +6,7 @@ namespace Constants {
             H = 32,
             BITS_IN_BYTE = 8,
             PIXEL_SIZE = 16,
-            MS_PER_UPDATE = 8;
+            MS_PER_UPDATE = 2;
     enum CPU_state {RUNNING, WAITING, QUIT};
 }
 
