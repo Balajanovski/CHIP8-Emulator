@@ -1,7 +1,8 @@
-# CHIP8-Emulator - IN DEVELOPMENT
+# CHIP8-Emulator
 A simple CHIP8 emulator created to learn more about emulation<br>
-<br>This repository is still in development and is not fit for use
+Modeled as close as possible to the Chip8 architecture, including using every single individual bit for the vga memory unlike other emulators which use a byte for each pixel.<br>
+Criticism is appreciated.
+
 
 ## Remaining issues:
-* Add an option to remove flickering
 * Add sound
