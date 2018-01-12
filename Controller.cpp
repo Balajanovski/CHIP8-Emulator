@@ -2,7 +2,6 @@
 
 #include <SDL2/SDL.h>
 #include <unordered_map>
-#include <SDL_events.h>
 
 const std::unordered_map<SDL_Keycode, int> Controller::keymap = {
         {SDLK_1, 0x1}, {SDLK_2, 0x2}, {SDLK_3, 0x3}, {SDLK_4, 0xC},
