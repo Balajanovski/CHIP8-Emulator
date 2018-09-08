@@ -6,7 +6,6 @@ class Observer {
 public:
     virtual ~Observer() { }
 
-
     virtual void on_notify(const T& event) = 0;
 };
 
